@@ -15,11 +15,14 @@ var newNote = '';
 // For page loads - call updateTable function
 window.onload = updateTable;
 
-// Form submit event 
+// For form submit event 
 form.addEventListener('submit', addNote);
 
 // For search - event
-search.addEventListener('keyup', searchNotes) 
+search.addEventListener('keyup', searchNotes);
+
+// For Remove
+items.addEventListener('click', removeNote);
 
 
 
@@ -104,11 +107,10 @@ function addNote(e){
           // ----- Set new note ------
           newNote = tr;
 
-          // Add or Update the note of the table  - call function
+          // Add or Update the note of the table - call function
           updateTable();
      }
 }
-
 
 // Search Notes Function 
 function searchNotes(e){ 
@@ -132,4 +134,27 @@ function searchNotes(e){
                itemT.style.display = 'none';
           }
      });
+}
+
+// Remove Note Function
+function removeNote(e){
+
+     console.log(e.target);
+     console.log(e.target.id);
+
+     if(e.target.id === 'del'){
+
+          if(confirm("Are you sure?")){
+               // Delete notes
+               var tr = e.target.parentElement.parentElement;
+               items.removeChild(tr);
+
+               // Update Table
+               noteCount--;
+               if(noteCount === 0){
+                    updateTable();  // call updateTable function 
+               }
+          }
+     }
+
 }
