@@ -1,9 +1,10 @@
 // ---------- Variables ----------
-var form = document.getElementById('add-frm');   // Select form
-var items = document.getElementById('items');    // Select table
-var nTitle = document.getElementById('nTitle');  // Select input
-var nBody = document.getElementById('nBody');    // Select textarea
-var tableDiv = document.getElementById('table-div');    // Select table Div
+var form = document.getElementById('add-frm');    // Select form
+var items = document.getElementById('items');     // Select table
+var nTitle = document.getElementById('nTitle');   // Select input
+var nBody = document.getElementById('nBody');     // Select textarea
+var tableDiv = document.getElementById('table-div');        // Select table Div
+var search = document.getElementById('srch');     // Search field
 
 var noteCount = 0;
 var newNote = '';
@@ -17,10 +18,14 @@ window.onload = updateTable;
 // Form submit event 
 form.addEventListener('submit', addNote);
 
+// For search - event
+search.addEventListener('keyup', searchNotes) 
+
+
 
 // ---------- Functions ----------
 
-// updateTable function
+// updateTable - function
 function updateTable(){
      // Display the table when notes get added
      if(noteCount > 0){
@@ -32,7 +37,7 @@ function updateTable(){
      }
 }
 
-// Add Note function
+// Add Note - function
 function addNote(e){
      
      e.preventDefault();   // Stop reloading the page
@@ -46,7 +51,7 @@ function addNote(e){
 
           // New tr
           var tr = document.createElement('tr');
-          tr.className = 'item';
+          tr.className = 'itemT';
 
           // ------------------ td1 - Form Data ------------------------
           // New td for title and body
@@ -61,7 +66,6 @@ function addNote(e){
           span.appendChild(document.createTextNode(nBody.value));
 
           td1.appendChild(span);
-          console.log('Table td1 : ' , td1);
 
           // ------------------ td2 - View btn ------------------------
           // New td for view btn
@@ -75,7 +79,6 @@ function addNote(e){
           btn1.setAttribute('id', 'vw');
           
           td2.appendChild(btn1);
-          console.log('Table td2 : ' , td2);
 
           // ------------------ td3 - Delete btn ------------------------
           // New td for Delete btn
@@ -89,14 +92,11 @@ function addNote(e){
           btn2.setAttribute('id', 'del');
 
           td3.appendChild(btn2);
-          console.log('Table td3 : ' , td3);
 
           // --------- Add all td's to tr ----------
           tr.appendChild(td1);
           tr.appendChild(td2);
           tr.appendChild(td3);
-          console.log('Table TR : ' , tr);
-
           
           // ----- Increment note count ------
           noteCount++;
@@ -107,6 +107,29 @@ function addNote(e){
           // Add or Update the note of the table  - call function
           updateTable();
      }
-
 }
 
+
+// Search Notes Function 
+function searchNotes(e){ 
+
+     // Text to lower case  (e.target = Search field)
+     var searchTxt = e.target.value.toLowerCase();
+
+     // Get list (Table notes)
+     var list = items.getElementsByClassName('itemT');
+
+     // Convert list to an array
+     var listArry = Array.from(list);
+
+     listArry.forEach(function(itemT){
+          // Get title (firstChild = first cell)
+          var noteTitle = itemT.firstChild.textContent;
+          // Match
+          if(noteTitle.toLowerCase().indexOf(searchTxt) != -1){
+               itemT.style.display = '';
+          } else {
+               itemT.style.display = 'none';
+          }
+     });
+}
