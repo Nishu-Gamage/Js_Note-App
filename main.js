@@ -3,8 +3,9 @@ var form = document.getElementById('add-frm');    // Select form
 var items = document.getElementById('items');     // Select table
 var nTitle = document.getElementById('nTitle');   // Select input
 var nBody = document.getElementById('nBody');     // Select textarea
-var tableDiv = document.getElementById('table-div');        // Select table Div
+var tableDiv = document.getElementById('table-div');     // Select table Div
 var search = document.getElementById('srch');     // Search field
+var resetBtn = document.getElementById('reset');     // Reset Btn
 
 var noteCount = 0;
 var newNote = '';
@@ -31,6 +32,8 @@ items.addEventListener('click', removeNote);
 // For View & Update
 items.addEventListener('click', viewNUpdateNote);
 
+// For Reset
+resetBtn.addEventListener('click', resetAll);
 
 
 // ---------- Functions ----------
@@ -128,6 +131,9 @@ function addNote(e){
           // Add or Update the note of the table - call function
           updateTable();
      }
+
+     // Reset All
+     resetAll();
 }
 
 // Search Notes Function 
@@ -171,7 +177,6 @@ function removeNote(e){
                }
           }
      }
-
 }
 
 // view & Update Note Function
@@ -187,4 +192,13 @@ function viewNUpdateNote(e){
            
           isUpdate = true;
      }
+}
+
+// Reset Function
+function resetAll(e){
+     
+     nTitle.value = '';
+     nBody.value = '';
+     isUpdate = false;
+     newNote = '';    
 }
